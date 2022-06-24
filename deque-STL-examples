@@ -1,0 +1,107 @@
+//Deque STL Examples - (front & back [middles, list prefered])
+#include <iostream>
+#include <deque>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+
+template <typename T>
+void display(const std::deque<T>& d) {
+    std::cout << "[ ";
+    for (const auto& elem : d)
+        std::cout << elem << " ";
+    std::cout << " ]" << std::endl;
+}
+
+        //Subscript Operator & .at Method
+void test1() {
+    std::cout << "\n=====Test 1=====" << std::endl;
+    std::deque<int> d{ 1,2,3,4,5 };
+    display(d);
+    std::deque<int> d1(10, 100); //deque intitialized to ten 100s
+    display(d1);
+    d[0] = 100;                  //subscript operator and .at method
+    d.at(4) = 200;
+    display(d);
+}
+
+
+        //push_back & push_front - pop_back & pop-front
+void test2() {
+    std::cout << "\n=====Test 2=====" << std::endl;
+    std::deque<int> d{ 0,0,0 };
+    display(d);
+    d.push_back(10);
+    d.push_back(20);
+    display(d);
+    d.push_front(100);
+    d.push_front(200);
+    std::cout << "Front: " << d.front() << std::endl;
+    std::cout << "Back: " << d.back() << std::endl;
+    std::cout << "Size: " << d.size() << std::endl;
+    std::cout << "Capacity: " << d.max_size() << std::endl;
+    d.pop_back();
+    d.pop_front();
+    display(d);
+}
+
+        //Insert Even ints to front & Odd to the back
+void test3() {
+    std::cout << "\n=====Test 3=====" << std::endl;
+    std::vector<int> vec{ 1,2,3,4,5,6,7,8,9,10 };
+    std::deque<int> d;
+    for (const auto& elem : vec) {
+        if (elem % 2 == 0)
+            d.push_back(elem);
+        else {
+            d.push_front(elem);
+        }
+    }
+    display(d);
+}
+
+        //push_front vs back ordering
+void test4() {
+    std::cout << "\n=====Test 4=====" << std::endl;
+    std::vector<int> vec{ 1,2,3,4,5,6,7,8,9,10 };
+    std::deque<int>d;
+    for (const auto& elem : vec) {  //push_front ordering
+        d.push_front(elem);
+    }
+    display(d);
+    d.clear();
+    for (const auto &elem : vec) { //pushes vec onto front after doubling each
+        int doubling = elem * 2;
+        d.push_front(doubling);
+    }
+    display(d);
+    d.clear();
+    for (const auto& elem : vec) {  //push_back ordering
+        d.push_back(elem);
+    }
+    display(d);
+}
+
+        //Front & back ordering with std::copy
+void test5() {
+    std::cout << "\n=====Test52=====" << std::endl;
+    std::vector<int> vec{ 1,2,3,4,5,6,7,8,9,10 };
+    std::deque <int> d{};
+    std::copy(vec.begin(), vec.end(), std::front_inserter(d));
+    display(d);
+    d.clear();
+    std::copy(vec.begin(), vec.end(), std::back_inserter(d));
+    display(d);
+}
+
+
+int main()
+{
+    test1();
+    test2();
+    test3();
+    test4();
+    test5();
+
+    return 0;
+}
